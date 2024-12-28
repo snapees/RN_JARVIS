@@ -1,14 +1,9 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import React from 'react';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {RFValue} from 'react-native-responsive-fontsize';
+import Navigation from './src/navigation/Navigation';
 
 const App = () => {
-  return (
-    <View>
-      <Icon name="arrow-down" size={RFValue(20)} color="white" />
-    </View>
-  );
+  return <Navigation />;
 };
 
 const styles = StyleSheet.create({});
