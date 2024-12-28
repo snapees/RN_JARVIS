@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {Image, StatusBar, StyleSheet, View} from 'react-native';
 import React, {useEffect} from 'react';
 import {Colors, Fonts, lightColors} from '../utils/Constants';
@@ -10,6 +11,9 @@ import {screenHeight, screenWidth} from '../utils/Scaling';
 import LinearGradient from 'react-native-linear-gradient';
 import CustomText from '../components/ui/CustomText';
 import LottieView from 'lottie-react-native';
+import {initializeTtsListeners} from '../utils/ttsListeners';
+import Tts from 'react-native-tts';
+import {resetAndNavigate} from '../utils/NavigationUtils';
 
 const bottomColors = [...lightColors].reverse();
 
@@ -21,10 +25,16 @@ const SplashScreen = () => {
     messageContainerAnimation.value = screenHeight * 0.001;
     setTimeout(() => {
       jarvisAnimation.value = -screenHeight * 0.02;
+      Tts.speak('Hello, I am Jarvis');
     }, 600);
+
+    setTimeout(() => {
+      resetAndNavigate('JarvisScreen');
+    }, 4500);
   };
 
   useEffect(() => {
+    initializeTtsListeners();
     launchAnimation();
   }, []);
 

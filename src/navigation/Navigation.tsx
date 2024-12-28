@@ -14,7 +14,11 @@ const NAvigation: FC = () => {
         initialRouteName="SplashScreen"
         screenOptions={{headerShown: false}}>
         <Stack.Screen name="SplashScreen" component={SplashScreen} />
-        <Stack.Screen name="JarvisScreen" component={JarvisScreen} />
+        <Stack.Screen
+          name="JarvisScreen"
+          component={JarvisScreen}
+          options={{animation: 'fade'}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
