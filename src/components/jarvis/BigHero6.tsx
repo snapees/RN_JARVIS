@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {Animated, StyleSheet, Text, View} from 'react-native';
+import {Animated, StyleSheet, View} from 'react-native';
 import React, {FC, useEffect, useRef} from 'react';
 import {screenHeight, screenWidth} from '../../utils/Scaling';
 import {bigHero6Data} from '../../utils/data';
 import Water from '../options/Water';
+import OptionItem from '../options/OptionItem';
 
 interface BigHero6Props {
   onPress: (type: string) => void;
@@ -50,7 +51,7 @@ const BigHero6: FC<BigHero6Props> = ({onPress}) => {
           <Animated.View
             style={[styles.item, {transform: [{translateX}, {translateY}]}]}
             key={index}>
-            {item !== 'water' && <Text>BigHero6</Text>}
+            {item !== 'water' && <OptionItem onPress={onPress} item={item} />}
             {item === 'water' && <Water />}
           </Animated.View>
         );

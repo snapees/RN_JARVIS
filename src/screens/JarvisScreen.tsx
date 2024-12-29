@@ -5,11 +5,17 @@ import {Colors} from '../utils/Constants';
 import Background from '../components/jarvis/Background';
 import Loading from '../components/jarvis/Loading';
 import BigHero6 from '../components/jarvis/BigHero6';
+import {playTTS} from '../utils/ttsListeners';
+import SoundPlayer from 'react-native-sound-player';
+import {playSound} from '../utils/voiceUtils';
+import {prompt} from '../utils/data';
+import Instructions from '../components/jarvis/Instructions';
+import Pedometer from '../components/pedometer/Pedometer';
 
 const JarvisScreen = () => {
   const [showInstructions, setShowInstructions] = useState(false);
   const [showLoader, setShowLoader] = useState(true);
-  const [showMessage, setShowMessage] = useState('');
+  const [message, setMessage] = useState('');
   const [showPedometer, setShowPedometer] = useState(false);
 
   const blurOpacity = useRef(new Animated.Value(0)).current;
@@ -35,9 +41,103 @@ const JarvisScreen = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  const handleError = (error: any) => {
+    playTTS('There was an error. Please Try again...');
+    startBlur();
+    setMessage('');
+    setShowLoader(true);
+    SoundPlayer.stop();
+    setShowInstructions(false);
+    console.log(error);
+  };
+
+  const handleResponse = async (
+    type: string,
+    promptText: string,
+    sound: string,
+  ) => {
+    setShowLoader(true);
+    try {
+      if (type === 'meditation') {
+        playTTS('Focus on your breath.');
+        playSound(sound);
+        setMessage('meditation');
+        return;
+      }
+
+      if (type === 'happiness') {
+        setTimeout(() => {
+          playSound(sound);
+        }, 5000);
+      } else {
+        playSound(sound);
+      }
+
+      setMessage(type);
+      stopBlur();
+    } catch (error) {
+      handleError(error);
+    } finally {
+      setShowLoader(false);
+    }
+  };
+
+  const onOptionPressHandler = (type: string) => {
+    setShowInstructions(true);
+    if (type === 'pedometer') {
+      setShowPedometer(true);
+      setShowLoader(false);
+      return;
+    }
+
+    switch (type) {
+      case 'happiness':
+        handleResponse(type, prompt.joke, 'laugh');
+        break;
+      case 'motivation':
+        handleResponse(type, prompt.motivation, 'motivation');
+        break;
+      case 'health':
+        handleResponse(type, prompt.health, 'meditation');
+        break;
+      case 'meditation':
+        handleResponse(type, prompt.health, 'meditation');
+        break;
+      default:
+        handleError('there was no type like that');
+    }
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor={Colors.secondry} />
+
+      {message && (
+        <Instructions
+          onCross={() => {
+            startBlur();
+            setMessage('');
+            setShowLoader(true);
+            SoundPlayer.stop();
+            setShowInstructions(false);
+          }}
+          message={message}
+        />
+      )}
+
+      {showPedometer && (
+        <Pedometer
+          onCross={() => {
+            startBlur();
+            setMessage('');
+            setShowLoader(true);
+            setShowPedometer(false);
+            SoundPlayer.stop();
+            setShowInstructions(false);
+          }}
+          message={message}
+        />
+      )}
 
       {showLoader && (
         <View style={styles.loaderContainer}>
@@ -46,8 +146,8 @@ const JarvisScreen = () => {
       )}
 
       {!showInstructions && (
-        <View style={{zIndex: 3}}>
-          <BigHero6 onPress={() => {}} />
+        <View style={styles.showInstructions}>
+          <BigHero6 onPress={onOptionPressHandler} />
         </View>
       )}
 
@@ -66,6 +166,9 @@ const styles = StyleSheet.create({
   loaderContainer: {
     position: 'absolute',
     zIndex: 2,
+  },
+  showInstructions: {
+    zIndex: 3,
   },
 });
 
