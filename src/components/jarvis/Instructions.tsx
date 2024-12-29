@@ -1,9 +1,10 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {FC} from 'react';
-import {Colors} from '../../utils/Constants';
+import {Colors, Fonts} from '../../utils/Constants';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {RFValue} from 'react-native-responsive-fontsize';
 import LottieView from 'lottie-react-native';
+import Markdown from 'react-native-markdown-display';
 
 interface instructionsProps {
   message: string;
@@ -30,7 +31,16 @@ const Instructions: FC<instructionsProps> = ({message, onCross}) => {
             loop
           />
         ) : (
-          <Text></Text>
+          <Markdown
+            style={{
+              body: {
+                fontFamily: Fonts.Theme,
+                padding: 20,
+                fontSize: RFValue(22),
+              },
+            }}>
+            {message}
+          </Markdown>
         )}
       </View>
     </View>

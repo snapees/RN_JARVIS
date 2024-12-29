@@ -11,6 +11,7 @@ import {playSound} from '../utils/voiceUtils';
 import {prompt} from '../utils/data';
 import Instructions from '../components/jarvis/Instructions';
 import Pedometer from '../components/pedometer/Pedometer';
+import {askAI} from '../service/apiService';
 
 const JarvisScreen = () => {
   const [showInstructions, setShowInstructions] = useState(false);
@@ -65,6 +66,10 @@ const JarvisScreen = () => {
         return;
       }
 
+      const data = await askAI(promptText);
+      setMessage(data);
+      playTTS(data);
+
       if (type === 'happiness') {
         setTimeout(() => {
           playSound(sound);
@@ -73,7 +78,6 @@ const JarvisScreen = () => {
         playSound(sound);
       }
 
-      setMessage(type);
       stopBlur();
     } catch (error) {
       handleError(error);
