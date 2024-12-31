@@ -14,10 +14,13 @@ const Water = () => {
   const completedSegments = waterDrinkStamps.length;
 
   const handlePress = () => {
-    playSound('ting');
     if (completedSegments < totalSegments) {
       const timeStamp = new Date().toISOString();
       addWaterIntake(timeStamp);
+      playSound('ting');
+      setTimeout(() => {
+        playTTS('Good Work! Stay Hydrated');
+      }, 1000);
     } else {
       playTTS('You have completed your daily water intake');
     }
