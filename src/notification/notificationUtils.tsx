@@ -84,10 +84,10 @@ export const createTimeStampNotification = async (
     triggerDate.setDate(triggerDate.getDate() + 1);
   }
 
-  // console.log(`Notification scheduled for: ${triggerDate}`);
-  // console.log(title);
-  // console.log(body);
-  // console.log(notificationID);
+  console.log(`Notification scheduled for: ${triggerDate}`);
+  console.log(title);
+  console.log(body);
+  console.log(notificationID);
 
   const trigger: TimestampTrigger = {
     type: TriggerType.TIMESTAMP,
@@ -104,40 +104,45 @@ export const createTimeStampNotification = async (
     },
   };
 
-  await notifee.createTriggerNotification(
-    {
-      id: notificationID,
-      title,
-      body,
-      android: {
-        channelId: 'default',
-        sound: 'notification',
-        onlyAlertOnce: true,
-        smallIcon: 'icon',
-        style: {
-          type: AndroidStyle.BIGPICTURE,
-          picture: imageUri || require('../assets/images/launch.png'),
-        },
-        actions: [action],
-      },
-      ios: {
-        categoryId: 'default',
-        attachments: [
-          {
-            url: imageUri || require('../assets/images/launch.png'),
-            thumbnailHidden: false,
+  try {
+    await notifee.createTriggerNotification(
+      {
+        id: notificationID,
+        title,
+        body,
+        android: {
+          channelId: 'default',
+          sound: 'notification',
+          onlyAlertOnce: true,
+          smallIcon: 'icon',
+          style: {
+            type: AndroidStyle.BIGPICTURE,
+            picture: imageUri || require('../assets/images/launch.png'),
           },
-        ],
-        interruptionLevel: 'timeSensitive',
-        foregroundPresentationOptions: {
-          badge: true,
-          sound: true,
-          banner: true,
-          list: true,
+          actions: [action],
         },
-        sound: 'notification.wav',
+        ios: {
+          categoryId: 'default',
+          attachments: [
+            {
+              url: imageUri || require('../assets/images/launch.png'),
+              thumbnailHidden: false,
+            },
+          ],
+          interruptionLevel: 'timeSensitive',
+          foregroundPresentationOptions: {
+            badge: true,
+            sound: true,
+            banner: true,
+            list: true,
+          },
+          sound: 'notification.wav',
+        },
       },
-    },
-    trigger,
-  );
+      trigger,
+    );
+    console.log('Notification created successfully');
+  } catch (error) {
+    console.log('Notification creation error, ', error);
+  }
 };

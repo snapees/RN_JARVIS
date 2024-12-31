@@ -48,7 +48,7 @@ export const registeringAllTriggers = async () => {
     'End Your Day With Peace 🌙✌️!',
     22,
     0,
-    'good-noght',
+    'good-night',
   );
 
   // morning walk reminder
