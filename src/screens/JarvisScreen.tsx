@@ -73,7 +73,7 @@ const JarvisScreen = () => {
       if (type === 'happiness') {
         setTimeout(() => {
           playSound(sound);
-        }, 5000);
+        }, 7000);
       } else {
         playSound(sound);
       }
