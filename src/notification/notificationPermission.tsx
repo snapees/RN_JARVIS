@@ -1,10 +1,18 @@
 import {Alert} from 'react-native';
 import notifee from '@notifee/react-native';
 import StepCounter from '@dongminyu/react-native-step-counter';
+import messaging from '@react-native-firebase/messaging';
+import {registerToken} from '../service/apiService';
 
 export const requestPermission = async () => {
   await notifee.requestPermission();
   await notifee.setBadgeCount(0);
+  await messaging().registerDeviceForRemoteMessages();
+
+  const token = await messaging().getToken();
+  console.log(token);
+  await registerToken(token);
+
   StepCounter.stopStepCounterUpdate();
 };
 

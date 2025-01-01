@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "774927773486",
+    "project_id": "jarvis-the-butler",
+    "storage_bucket": "jarvis-the-butler.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:774927773486:android:a29ce0003062e390a714bf",
+        "android_client_info": {
+          "package_name": "com.jarvis"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJNPiPfm2KxnJ4d8uIQkg_tZGY6ihHXfE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -15,8 +15,8 @@ export const initializeTtsListeners = async () => {
 
   // const voices = await Tts.voices();
   // console.log(voices);
-  Tts.setDefaultVoice('en-us-x-iol-local');
-  Tts.setDefaultRate(0.3, true);
+  Tts.setDefaultVoice('en-us-x-iol-network');
+  Tts.setDefaultRate(0.6, true);
   Tts.setIgnoreSilentSwitch('ignore');
   Tts.setDefaultPitch(0.7);
 
