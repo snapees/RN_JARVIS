@@ -84,10 +84,10 @@ export const createTimeStampNotification = async (
     triggerDate.setDate(triggerDate.getDate() + 1);
   }
 
-  console.log(`Notification scheduled for: ${triggerDate}`);
-  console.log(title);
-  console.log(body);
-  console.log(notificationID);
+  // console.log(`Notification scheduled for: ${triggerDate}`);
+  // console.log(title);
+  // console.log(body);
+  // console.log(notificationID);
 
   const trigger: TimestampTrigger = {
     type: TriggerType.TIMESTAMP,
